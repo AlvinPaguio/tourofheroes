@@ -6,19 +6,42 @@ import { of } from 'rxjs/observable/of';
 import { Hero } from './hero';
 import { HEROES } from './mock-heroes';
 import { MessageService } from './message.service';
+import { Restangular } from 'ngx-restangular';
 
 @Injectable()
 export class HeroService {
 
-  constructor(private messageService: MessageService) { }
+  private heroes: Hero[];
 
-  getHero(id: number): Observable<Hero> {
-    // Todo: send the message _after_ fetching the hero
-    this.messageService.add(`HeroService: fetched hero id=${id}`);
-    return of(HEROES.find(hero => hero.id === id));
-  }
+  constructor(private restangular: Restangular, private messageService: MessageService) { }
 
   getHeroes(): Observable<Hero[]> {
-    return of(HEROES);
+    return this.restangular.all('heroes').getList();
+  }
+
+  getHero(id: string): Observable<Hero> {
+    console.log('id: ', id);
+    this.messageService.add(`HeroService: fetched hero id=${id}`);
+    return this.restangular.one('heroes', id).get();
+    // return of(HEROES.find(hero => hero.id === id));
+  }
+
+  /** PUT: update the hero on the server */
+  updateHero(hero: Hero): Observable<any> {
+    return this.restangular.one('heroes', hero._id).customPUT(hero);
+
+  }
+
+  /** POST: add a new hero to the server */
+  addHero(hero: Hero): Observable<Hero> {
+    return this.restangular.all('heroes').post(hero);
+  }
+
+  /** DELETE: delete the hero from the server */
+  deleteHero(hero: Hero | number): Observable<Hero> {
+    const id = typeof hero === 'number' ? hero : hero._id;
+
+    return this.restangular.one('heroes', id).remove();
   }
 }
+

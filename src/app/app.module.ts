@@ -10,6 +10,11 @@ import { HeroService } from './hero.service';
 import { MessageService } from './message.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { RestangularModule } from 'ngx-restangular';
+
+export function RestangularConfigFactory(RestangularProvider) {
+  RestangularProvider.setBaseUrl('http://hero-backend.2muchcoffee.com/api/');
+}
 
 @NgModule({
   declarations: [
@@ -20,6 +25,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     DashboardComponent
   ],
   imports: [
+    RestangularModule.forRoot(RestangularConfigFactory),
     BrowserModule,
     FormsModule,
     AppRoutingModule

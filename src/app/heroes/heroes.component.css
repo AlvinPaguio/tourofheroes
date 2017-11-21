@@ -1,19 +1,24 @@
-/* HeroesComponent's private CSS styles */
+
 .heroes {
     margin: 0 0 2em 0;
     list-style-type: none;
     padding: 0;
-    width: 15em;
+    width: 30em;
 }
 
 .heroes li {
     position: relative;
     cursor: pointer;
     background-color: #EEE;
-    margin: .5em;
-    padding: .3em 0;
-    height: 1.6em;
+    margin: .8em;
     border-radius: 4px;
+    overflow: hidden;
+    width: 550px;
+}
+
+.heroes li button {
+    float: right;
+    margin: 0.7em;
 }
 
 .heroes li:hover {
@@ -26,8 +31,7 @@
     color: #888;
     text-decoration: none;
     position: relative;
-    display: block;
-    width: 250px;
+    width: 300px;
 }
 
 .heroes a:hover {
@@ -42,9 +46,8 @@
     background-color: #607D8B;
     line-height: 1em;
     position: relative;
-    left: -1px;
-    top: -4px;
     height: 1.8em;
+    width: 40%;
     min-width: 16px;
     text-align: right;
     margin-right: .8em;
